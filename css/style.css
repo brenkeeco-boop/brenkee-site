@@ -646,54 +646,6 @@ section {
 }
 
 /* -----------------------------------------------------------
-   Diferencial
------------------------------------------------------------ */
-.diferencial__inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-.diferencial__texto h2 {
-  font-size: clamp(1.85rem, 3.2vw, 2.4rem);
-  margin-bottom: 20px;
-  max-width: 18ch;
-}
-
-.diferencial__texto p {
-  color: var(--text-muted);
-  font-size: 1.06rem;
-  max-width: 52ch;
-}
-
-.diferencial__texto p + p {
-  margin-top: 16px;
-}
-
-.diferencial__visual {
-  position: relative;
-  height: 220px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, var(--gold-soft), transparent 55%),
-    linear-gradient(315deg, var(--blue-soft), transparent 55%);
-  overflow: hidden;
-}
-
-.diferencial__visual::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 34px 34px;
-  opacity: 0.6;
-}
-
-/* -----------------------------------------------------------
    Como funciona
 ----------------------------------------------------------- */
 .como-funciona__lista {
@@ -1029,10 +981,6 @@ section {
 
   .projetos__grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .diferencial__inner {
-    grid-template-columns: 1fr 0.8fr;
   }
 
   section {
