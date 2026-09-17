@@ -551,6 +551,42 @@ section {
 }
 
 /* -----------------------------------------------------------
+   O que isso muda no seu negócio (benefícios)
+----------------------------------------------------------- */
+.beneficios__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.beneficios__grid .servico-card h3 {
+  margin-bottom: 0;
+  font-size: 1.05rem;
+}
+
+.beneficios__cta {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* -----------------------------------------------------------
+   Prova social (espaço reservado)
+----------------------------------------------------------- */
+.prova-social__inner {
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.prova-social__inner p {
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin: 12px auto 0;
+  font-size: 1rem;
+}
+
+/* -----------------------------------------------------------
    Projetos
 ----------------------------------------------------------- */
 .projetos {
@@ -951,6 +987,10 @@ section {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .beneficios__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .projetos__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -980,6 +1020,10 @@ section {
   }
 
   .servicos__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .beneficios__grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
