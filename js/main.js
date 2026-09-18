@@ -17,6 +17,114 @@
   }
 
   // -----------------------------------------------------------
+  // Projetos — leitura pública do Supabase
+  // -----------------------------------------------------------
+  var SUPABASE_URL = 'https://enveuvqhzpauuycullvt.supabase.co';
+  var SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_Ot9oXQCdNGy5sDnsT3qsaw_xlTpG-k6';
+  var listaProjetos = document.getElementById('projetos-lista');
+
+  function limparListaProjetos() {
+    while (listaProjetos.firstChild) {
+      listaProjetos.removeChild(listaProjetos.firstChild);
+    }
+  }
+
+  function mostrarEstadoProjetos(titulo, descricao) {
+    limparListaProjetos();
+
+    var card = document.createElement('article');
+    card.className = 'projeto-card reveal';
+    var conteudo = document.createElement('div');
+    conteudo.className = 'projeto-card__conteudo';
+    var heading = document.createElement('h3');
+    heading.textContent = titulo;
+    conteudo.appendChild(heading);
+
+    if (descricao) {
+      var texto = document.createElement('p');
+      texto.textContent = descricao;
+      conteudo.appendChild(texto);
+    }
+
+    card.appendChild(conteudo);
+    listaProjetos.appendChild(card);
+  }
+
+  function criarCardProjeto(projeto) {
+    var card = document.createElement('article');
+    card.className = 'projeto-card reveal';
+    card.dataset.categoria = projeto.categoria || '';
+
+    var imagemContainer = document.createElement('div');
+    imagemContainer.className = 'projeto-card__imagem';
+    if (projeto.imagem) {
+      var imagem = document.createElement('img');
+      imagem.src = projeto.imagem;
+      imagem.alt = projeto.nome ? 'Projeto ' + projeto.nome : 'Projeto Brenkee';
+      imagemContainer.appendChild(imagem);
+    }
+
+    var conteudo = document.createElement('div');
+    conteudo.className = 'projeto-card__conteudo';
+    var titulo = document.createElement('h3');
+
+    if (projeto.link) {
+      var link = document.createElement('a');
+      link.href = projeto.link;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = projeto.nome;
+      titulo.appendChild(link);
+    } else {
+      titulo.textContent = projeto.nome;
+    }
+
+    conteudo.appendChild(titulo);
+    if (projeto.descricao) {
+      var descricao = document.createElement('p');
+      descricao.textContent = projeto.descricao;
+      conteudo.appendChild(descricao);
+    }
+
+    card.appendChild(imagemContainer);
+    card.appendChild(conteudo);
+    return card;
+  }
+
+  async function carregarProjetos() {
+    if (!listaProjetos) return;
+
+    if (!window.supabase || !window.supabase.createClient) {
+      mostrarEstadoProjetos('Projetos indisponíveis', 'Não foi possível carregar os projetos no momento.');
+      return;
+    }
+
+    try {
+      var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      var resposta = await client
+        .from('projetos')
+        .select('nome, descricao, categoria, link, imagem, criado_em')
+        .order('criado_em', { ascending: false });
+
+      if (resposta.error) throw resposta.error;
+
+      if (!resposta.data || resposta.data.length === 0) {
+        mostrarEstadoProjetos('Nenhum projeto cadastrado ainda', 'Em breve, novos projetos aparecerão aqui.');
+        return;
+      }
+
+      limparListaProjetos();
+      resposta.data.forEach(function (projeto) {
+        listaProjetos.appendChild(criarCardProjeto(projeto));
+      });
+    } catch (error) {
+      mostrarEstadoProjetos('Projetos indisponíveis', 'Não foi possível carregar os projetos no momento.');
+    }
+  }
+
+  carregarProjetos();
+
+  // -----------------------------------------------------------
   // Ano atual no footer
   // -----------------------------------------------------------
   var anoEl = document.getElementById('ano-atual');
