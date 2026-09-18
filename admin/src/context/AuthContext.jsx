@@ -13,10 +13,12 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session)
-      setLoading(false)
-    })
+    supabase.auth.getSession()
+      .then(({ data, error }) => {
+        if (error) console.error('Não foi possível recuperar a sessão do Supabase.', error)
+        setSession(data?.session ?? null)
+      })
+      .finally(() => setLoading(false))
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession)
@@ -33,8 +35,9 @@ export function AuthProvider({ children }) {
   }
 
   async function signOut() {
-    await supabase.auth.signOut()
-    setSession(null)
+    const { error } = await supabase.auth.signOut()
+    if (!error) setSession(null)
+    return { error }
   }
 
   const value = {

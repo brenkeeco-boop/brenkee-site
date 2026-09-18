@@ -242,8 +242,22 @@ section {
   width: 100%;
 }
 
-.header__cta {
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-left: auto;
+}
+
+.header__login {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s var(--ease);
+}
+
+.header__login:hover {
+  color: var(--text);
 }
 
 .header__menu-toggle {

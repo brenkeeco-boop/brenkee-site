@@ -4,12 +4,14 @@ import { useAuth } from '../../context/AuthContext'
 import './Login.css'
 
 export default function Login() {
-  const { session, signIn } = useAuth()
+  const { session, loading: authLoading, signIn } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  if (authLoading) return <div className="route-loading">Carregando…</div>
 
   // Já logado? Não faz sentido mostrar o login de novo.
   if (session) return <Navigate to="/dashboard" replace />
