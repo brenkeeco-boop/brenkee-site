@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabaseClient'
-import { IconPlus, IconEdit, IconEye, IconTrash } from '../../components/icons'
+import { IconPlus, IconEdit, IconEye, IconTrash, IconLink } from '../../components/icons'
 import ClienteForm from './ClienteForm'
 import './Clientes.css'
 
@@ -8,12 +8,13 @@ const CLIENT_FIELDS = 'id, nome, empresa, telefone, email, observacoes, criado_e
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([])
-  const [projetosPorCliente, setProjetosPorCliente] = useState({})
+  const [contagemProjetos, setContagemProjetos] = useState({})
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
   const [success, setSuccess] = useState('')
   const [expandido, setExpandido] = useState(null)
   const [loadingProjetosId, setLoadingProjetosId] = useState(null)
+  const [projetosRelacionados, setProjetosRelacionados] = useState([])
   const [projetosError, setProjetosError] = useState('')
   const [formOpen, setFormOpen] = useState(false)
   const [editando, setEditando] = useState(null)
@@ -24,15 +25,31 @@ export default function Clientes() {
     setLoading(true)
     setLoadError('')
 
-    const { data, error } = await supabase
-      .from('clientes')
-      .select(CLIENT_FIELDS)
-      .order('criado_em', { ascending: false })
+    const [clientesResposta, projetosResposta] = await Promise.all([
+      supabase
+        .from('clientes')
+        .select(CLIENT_FIELDS)
+        .order('criado_em', { ascending: false }),
+      supabase.from('projetos').select('cliente_id'),
+    ])
 
-    if (error) {
+    if (clientesResposta.error) {
       setLoadError('Não foi possível carregar os clientes. Tente novamente.')
     } else {
-      setClientes(data ?? [])
+      setClientes(clientesResposta.data ?? [])
+    }
+
+    if (projetosResposta.error) {
+      setLoadError('Não foi possível carregar as relações de projetos. Tente novamente.')
+      setContagemProjetos({})
+    } else {
+      const contagens = (projetosResposta.data ?? []).reduce((acumulado, projeto) => {
+        if (projeto.cliente_id) {
+          acumulado[projeto.cliente_id] = (acumulado[projeto.cliente_id] ?? 0) + 1
+        }
+        return acumulado
+      }, {})
+      setContagemProjetos(contagens)
     }
 
     setLoading(false)
@@ -94,25 +111,24 @@ export default function Clientes() {
     if (expandido === clienteId) {
       setExpandido(null)
       setProjetosError('')
+      setProjetosRelacionados([])
       return
     }
 
     setExpandido(clienteId)
     setProjetosError('')
 
-    if (projetosPorCliente[clienteId]) return
-
     setLoadingProjetosId(clienteId)
     const { data, error } = await supabase
       .from('projetos')
-      .select('id, nome')
+      .select('id, nome, descricao, categoria, imagem, link, criado_em')
       .eq('cliente_id', clienteId)
       .order('criado_em', { ascending: false })
 
     if (error) {
       setProjetosError('Não foi possível carregar os projetos relacionados.')
     } else {
-      setProjetosPorCliente((current) => ({ ...current, [clienteId]: data ?? [] }))
+      setProjetosRelacionados(data ?? [])
     }
 
     setLoadingProjetosId(null)
@@ -178,7 +194,6 @@ export default function Clientes() {
             </thead>
             <tbody>
               {clientes.map((cliente) => {
-                const projetos = projetosPorCliente[cliente.id]
                 const isExpanded = expandido === cliente.id
 
                 return (
@@ -187,7 +202,7 @@ export default function Clientes() {
                       <td>{cliente.nome}</td>
                       <td>{cliente.empresa || '—'}</td>
                       <td>{cliente.telefone || cliente.email || '—'}</td>
-                      <td>{projetos ? projetos.length : '—'}</td>
+                      <td>{contagemProjetos[cliente.id] ?? 0}</td>
                       <td>
                         <div className="clientes__actions">
                           <button type="button" className="btn btn--icon" onClick={() => toggleProjetos(cliente.id)} aria-label="Ver projetos relacionados" disabled={deletingId === cliente.id}>
@@ -211,8 +226,26 @@ export default function Clientes() {
                               ? 'Carregando…'
                               : projetosError
                                 ? projetosError
-                                : projetos?.length
-                                  ? projetos.map((projeto) => projeto.nome).join(', ')
+                                : projetosRelacionados.length
+                                  ? (
+                                    <div className="clientes__projetos-lista">
+                                      {projetosRelacionados.map((projeto) => (
+                                        <article key={projeto.id} className="clientes__projeto">
+                                          {projeto.imagem && <img src={projeto.imagem} alt="" className="clientes__projeto-imagem" />}
+                                          <div>
+                                            <strong>{projeto.nome}</strong>
+                                            {projeto.categoria && <span className="clientes__projeto-categoria">{projeto.categoria}</span>}
+                                            {projeto.descricao && <p>{projeto.descricao}</p>}
+                                            {projeto.link && (
+                                              <a href={projeto.link} target="_blank" rel="noopener noreferrer" className="clientes__projeto-link">
+                                                <IconLink size={14} /> Ver projeto
+                                              </a>
+                                            )}
+                                          </div>
+                                        </article>
+                                      ))}
+                                    </div>
+                                  )
                                   : 'Nenhum projeto relacionado.'}
                           </div>
                         </td>

@@ -17,3 +17,46 @@
 .clientes__detalhe strong {
   color: var(--text);
 }
+
+.clientes__projetos-lista {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.clientes__projeto {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.clientes__projeto-imagem {
+  width: 72px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.clientes__projeto-categoria {
+  display: block;
+  margin-top: 2px;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.clientes__projeto p {
+  margin-top: 4px;
+}
+
+.clientes__projeto-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  color: var(--blue);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
