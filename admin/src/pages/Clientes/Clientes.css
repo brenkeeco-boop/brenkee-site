@@ -1,0 +1,19 @@
+.clientes__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.clientes__detalhe-row td {
+  background: var(--bg);
+  white-space: normal;
+}
+
+.clientes__detalhe {
+  padding: 4px 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.clientes__detalhe strong {
+  color: var(--text);
+}

@@ -1,0 +1,33 @@
+.admin-layout {
+  min-height: 100vh;
+}
+
+.admin-layout__main {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-layout__content {
+  flex: 1;
+  padding: 28px 32px 48px;
+}
+
+.route-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .admin-layout__main {
+    margin-left: 0;
+  }
+  .admin-layout__content {
+    padding: 22px 18px 40px;
+  }
+}

@@ -1,0 +1,315 @@
+/* ==========================================================
+   BRENKEE ADMIN — Base global
+   ========================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* -----------------------------------------------------------
+   Botões
+----------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+  transition: transform 0.2s var(--ease), background-color 0.2s var(--ease),
+              border-color 0.2s var(--ease), color 0.2s var(--ease);
+  white-space: nowrap;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--gold);
+  color: #0d0d0d;
+}
+.btn--primary:hover:not(:disabled) {
+  background: #ddb42f;
+}
+
+.btn--outline {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.btn--outline:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn--ghost {
+  color: var(--text-muted);
+  padding: 8px 10px;
+}
+.btn--ghost:hover:not(:disabled) {
+  color: var(--text);
+}
+
+.btn--danger {
+  color: var(--red);
+}
+.btn--danger:hover:not(:disabled) {
+  background: var(--red-soft);
+}
+
+.btn--sm {
+  padding: 7px 12px;
+  font-size: 0.82rem;
+}
+
+.btn--icon {
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+.btn--icon:hover:not(:disabled) {
+  color: var(--text);
+  background: rgba(245, 245, 245, 0.06);
+}
+
+/* -----------------------------------------------------------
+   Cards / painéis
+----------------------------------------------------------- */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+}
+
+.page-header p {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+/* -----------------------------------------------------------
+   Formulários
+----------------------------------------------------------- */
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 0.92rem;
+  transition: border-color 0.2s var(--ease);
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-family: var(--font-body);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.form-field--hint {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-error {
+  background: var(--red-soft);
+  color: #ff9a9d;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.86rem;
+  margin-bottom: 16px;
+}
+
+.form-success {
+  background: var(--green-soft);
+  color: var(--green);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.86rem;
+  margin-bottom: 16px;
+}
+
+/* -----------------------------------------------------------
+   Tabelas
+----------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+th {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+td.is-wrap, th.is-wrap {
+  white-space: normal;
+}
+
+/* -----------------------------------------------------------
+   Badges de status
+----------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge--novo { background: var(--blue-soft); color: #7ea2f7; }
+.badge--em-contato { background: var(--gold-soft); color: var(--gold); }
+.badge--fechado { background: var(--green-soft); color: var(--green); }
+.badge--perdido { background: var(--red-soft); color: #ff9a9d; }
+
+/* -----------------------------------------------------------
+   Estado vazio
+----------------------------------------------------------- */
+.empty-state {
+  text-align: center;
+  padding: 56px 24px;
+  color: var(--text-muted);
+}
+.empty-state h3 {
+  color: var(--text);
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+/* -----------------------------------------------------------
+   Responsivo
+----------------------------------------------------------- */
+@media (max-width: 720px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

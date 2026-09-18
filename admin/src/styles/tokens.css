@@ -1,0 +1,34 @@
+/* ==========================================================
+   BRENKEE ADMIN — Tokens de design
+   Mesma identidade visual do site público (preto, dourado, azul).
+   ========================================================== */
+
+:root {
+  --bg: #080808;
+  --bg-secondary: #111111;
+  --bg-elevated: #161616;
+  --text: #F5F5F5;
+  --text-muted: #A8A8A8;
+  --gold: #C9A227;
+  --gold-soft: rgba(201, 162, 39, 0.14);
+  --blue: #2563EB;
+  --blue-soft: rgba(37, 99, 235, 0.14);
+  --red: #E5484D;
+  --red-soft: rgba(229, 72, 77, 0.14);
+  --green: #3DD68C;
+  --green-soft: rgba(61, 214, 140, 0.14);
+  --border: rgba(245, 245, 245, 0.09);
+  --border-strong: rgba(245, 245, 245, 0.16);
+
+  --font-heading: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --sidebar-width: 248px;
+  --topbar-height: 68px;
+}
